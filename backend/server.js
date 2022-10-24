@@ -43,12 +43,15 @@ io.on('connection', socket => {
             io.to(roomCode).emit('updateGame', gameState);
         })
         // send Message
-        socket.on('message', message => {
+        socket.on('message', (message, callback) => {
+            console.log('Dang nghe message', message)
             io.to(roomCode).emit('message', message);
+            callback();
         })
         // Leav
         socket.on('leaving', newUser => {
             io.to(roomCode).emit('roomData', {users: newUser});
+            io.to(roomCode).emit('leaveUser')
         })
         // disconnect
         socket.on('disconnect', async () => {
