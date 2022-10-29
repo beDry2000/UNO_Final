@@ -51,10 +51,12 @@ io.on('connection', socket => {
         // Leav
         socket.on('leaving', newUser => {
             io.to(roomCode).emit('roomData', {users: newUser});
+            console.log('Sau khi co nguoi leave', newUser)
             io.to(roomCode).emit('leaveUser')
         })
         // disconnect
         socket.on('disconnect', async () => {
+            io.to(roomCode).emit('leaveUser')
             console.log('Disconnected')
             // io.to(roomCode).emit('roomData', { users: await socketUtil.getUsersInRoom(roomCode) })
         })

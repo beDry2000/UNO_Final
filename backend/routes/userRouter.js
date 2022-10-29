@@ -92,6 +92,8 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 const joinRoom = asyncHandler(async (req, res) => {
     const { roomCode } = req.body;
+    const {id} = req.params;
+    console.log('Id of person to join: ' + id);
 
     if (!roomCode) {
         res.status(400);
@@ -99,13 +101,15 @@ const joinRoom = asyncHandler(async (req, res) => {
     }
 
     const isExistRoom = await User.find({ roomCode });
+    const hasJoinedRoom = isExistRoom.some(({_id}) => _id == id);
+    console.log(hasJoinedRoom, id);
 
     if (isExistRoom.length === 0) {
         res.status(400);
         throw new Error('Room not found');
     }
 
-    if (isExistRoom.length === 2) {
+    if (isExistRoom.length === 2 && !hasJoinedRoom) {
         res.status(400);
         throw new Error('Room already full');
     }
