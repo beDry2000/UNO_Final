@@ -37,27 +37,20 @@ io.on('connection', socket => {
 
         // update Game State
         socket.on('updateGameState', gameState => {
-            // Send new Game State to room
-            // Only the part that needs to be updated
-            // Always set back to prev state of Uno Button
             io.to(roomCode).emit('updateGame', gameState);
         })
         // send Message
-        socket.on('message', (message, callback) => {
-            console.log('Dang nghe message', message)
+        socket.on('message', (message) => {
             io.to(roomCode).emit('message', message);
-            callback();
         })
         // Leav
         socket.on('leaving', newUser => {
             io.to(roomCode).emit('roomData', {users: newUser});
-            console.log('Sau khi co nguoi leave', newUser)
             io.to(roomCode).emit('leaveUser')
         })
         // disconnect
         socket.on('disconnect', async () => {
             io.to(roomCode).emit('leaveUser')
-            console.log('Disconnected')
             // io.to(roomCode).emit('roomData', { users: await socketUtil.getUsersInRoom(roomCode) })
         })
     })
