@@ -45,6 +45,14 @@ io.on('connection', socket => {
         socket.on('message', (message) => {
             io.to(roomCode).emit('message', message);
         })
+        // Click uno
+        socket.on('playSound', (soundItem,callback) => {
+            console.log(soundItem)
+            callback(soundItem);
+        })
+        // Draw card
+
+
         // Leav
         socket.on('leaving', newUser => {
             io.to(roomCode).emit('roomData', { users: newUser });
