@@ -6,12 +6,14 @@ import errorHandler from './middlewares/errorHandler';
 import userRouter from './routes/userRouter';
 import http from 'http';
 import socketUtil from './socketUtil';
+import { config } from 'dotenv';
 
-const PORT = 5000;
 
+config();
 connectDB();
 const app = express();
 app.use(cors());
+const PORT = process.env.PORT || 5000;
 
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -59,6 +61,10 @@ io.on('connection', socket => {
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+app.get('/test', (req, res) => {
+    res.json({isTesting: true});
+})
 
 app.use("/api/users", userRouter);
 
