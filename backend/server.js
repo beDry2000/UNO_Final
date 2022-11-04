@@ -47,12 +47,9 @@ io.on('connection', socket => {
         })
         // Click uno
         socket.on('playSound', (soundItem,callback) => {
-            console.log(soundItem)
             callback(soundItem);
         })
         // Draw card
-
-
         // Leav
         socket.on('leaving', newUser => {
             io.to(roomCode).emit('roomData', { users: newUser });
