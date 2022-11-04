@@ -46,8 +46,8 @@ io.on('connection', socket => {
             io.to(roomCode).emit('message', message);
         })
         // Click uno
-        socket.on('playSound', (soundItem,callback) => {
-            callback(soundItem);
+        socket.on('playSound', (soundItem) => {
+            io.to(roomCode).emit('playSound', soundItem);
         })
         // Draw card
         // Leav
