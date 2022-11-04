@@ -62,7 +62,7 @@ io.on('connection', socket => {
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.get('/test', (req, res) => {
+app.get('/tryout', (req, res) => {
     res.json({isTesting: true});
 })
 
